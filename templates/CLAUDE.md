@@ -22,8 +22,10 @@ You are the **architect and coordinator**. You plan, analyze, and coordinate —
 
 ## Session Communication Directory
 
-A SessionStart hook automatically creates `./cc-swarm/$ARCHITECT_SESSION_ID/`.
+A SessionStart hook automatically creates `cc-swarm/$ARCHITECT_SESSION_ID/`.
 The environment variable `$ARCHITECT_SESSION_ID` is available in Bash.
+
+**Note:** When dispatching subagents, always provide the **absolute path** to the session directory. Subagents may run with a different working directory than the project root.
 
 ### File Naming Convention
 
@@ -42,8 +44,8 @@ The environment variable `$ARCHITECT_SESSION_ID` is available in Bash.
 2. Dispatch a subagent with instructions including:
    - Task objectives and context
    - Relevant file paths
-   - Write task definition to `cc-swarm/$ARCHITECT_SESSION_ID/task-NNN-<slug>.md`
-   - Write results to `cc-swarm/$ARCHITECT_SESSION_ID/output-NNN-<slug>.md`
+   - Write task definition to `<absolute_project_root>/cc-swarm/$ARCHITECT_SESSION_ID/task-NNN-<slug>.md`
+   - Write results to `<absolute_project_root>/cc-swarm/$ARCHITECT_SESSION_ID/output-NNN-<slug>.md`
 3. After subagent completes, Read its output file
 4. If revisions needed, dispatch a new subagent referencing previous output
 5. Have subagents update STATUS.md and TODO.md as work progresses
@@ -52,7 +54,7 @@ The environment variable `$ARCHITECT_SESSION_ID` is available in Bash.
 
 When dispatching subagents, the prompt MUST include:
 - Clear task description
-- Session directory path: `./cc-swarm/<session_id>/` (use the actual session_id value)
+- Session directory path: use the **absolute path** to `cc-swarm/<session_id>/` (resolve via `$PWD/cc-swarm/<session_id>/` or Bash `pwd`). Subagents run in their own working directory — relative paths like `./cc-swarm/` will resolve incorrectly if the subagent's cwd differs from the project root.
 - Target file names for output
 - Relevant code file paths and context
 - Instruction to write task file first, then execute, then write output file

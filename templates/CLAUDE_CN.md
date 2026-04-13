@@ -22,8 +22,10 @@
 
 ## 会话通信目录
 
-SessionStart hook 会自动创建 `./cc-swarm/$ARCHITECT_SESSION_ID/` 目录。
+SessionStart hook 会自动创建 `cc-swarm/$ARCHITECT_SESSION_ID/` 目录。
 环境变量 `$ARCHITECT_SESSION_ID` 可在 Bash 中使用。
+
+**注意：** 派遣 subagent 时，必须提供会话目录的**绝对路径**。Subagent 的工作目录可能与项目根目录不同。
 
 ### 文件命名约定
 
@@ -42,8 +44,8 @@ SessionStart hook 会自动创建 `./cc-swarm/$ARCHITECT_SESSION_ID/` 目录。
 2. 派遣 subagent，在 prompt 中说明：
    - 任务目标和上下文
    - 相关文件路径
-   - 要求将任务定义写入 `cc-swarm/$ARCHITECT_SESSION_ID/task-NNN-<slug>.md`
-   - 要求将执行结果写入 `cc-swarm/$ARCHITECT_SESSION_ID/output-NNN-<slug>.md`
+   - 要求将任务定义写入 `<项目绝对路径>/cc-swarm/$ARCHITECT_SESSION_ID/task-NNN-<slug>.md`
+   - 要求将执行结果写入 `<项目绝对路径>/cc-swarm/$ARCHITECT_SESSION_ID/output-NNN-<slug>.md`
 3. subagent 完成后，Read 其输出文件
 4. 如需修改，派遣新 subagent 并引用之前的输出
 5. 让 subagent 更新 STATUS.md 和 TODO.md
@@ -52,7 +54,7 @@ SessionStart hook 会自动创建 `./cc-swarm/$ARCHITECT_SESSION_ID/` 目录。
 
 派遣 subagent 时，prompt 中必须包含：
 - 明确的任务描述
-- 会话目录路径：`./cc-swarm/<session_id>/`（直接写入实际 session_id 值）
+- 会话目录路径：必须使用**绝对路径**指向 `cc-swarm/<session_id>/`（通过 Bash `pwd` 或 `$PWD/cc-swarm/<session_id>/` 获取）。Subagent 在独立的工作目录中运行，`./cc-swarm/` 这样的相对路径在 subagent 的 cwd 与项目根目录不同时会解析到错误位置。
 - 要写入的文件名
 - 相关的代码文件路径和上下文
 - 要求 subagent 先写任务文件，再执行，最后写输出文件
