@@ -8,13 +8,13 @@ English | [中文](README_CN.md)
 
 **Architect Mode for Claude Code — Main agent plans, subagents execute.**
 
-cc-swarm turns the Claude Code main agent into a pure **architect**: it only plans, coordinates, and reviews. All file editing, code development, documentation writing, and code review are delegated to **subagents**. Enforcement is done via [Claude Code Hooks](https://docs.anthropic.com/en/docs/claude-code/hooks) that intercept tool calls at runtime, and agents communicate through a shared **file-system protocol** (markdown files under `claude_dev/<session_id>/`).
+cc-swarm turns the Claude Code main agent into a pure **architect**: it only plans, coordinates, and reviews. All file editing, code development, documentation writing, and code review are delegated to **subagents**. Enforcement is done via [Claude Code Hooks](https://docs.anthropic.com/en/docs/claude-code/hooks) that intercept tool calls at runtime, and agents communicate through a shared **file-system protocol** (markdown files under `cc-swarm/<session_id>/`).
 
 ## How It Works
 
 | Component | Role |
 |---|---|
-| **SessionStart Hook** | Creates the `claude_dev/<session_id>/` communication directory and persists `session_id` as an environment variable for the session. |
+| **SessionStart Hook** | Creates the `cc-swarm/<session_id>/` communication directory and persists `session_id` as an environment variable for the session. |
 | **PreToolUse Hook** | Intercepts `Write` / `Edit` calls from the main agent. Uses `agent_id` to distinguish main agent from subagents — only subagents are allowed to write files. |
 | **CLAUDE.md** | Global instructions that define the architect role, delegation workflow, and communication protocol. |
 
@@ -31,7 +31,7 @@ Restart Claude Code after installation for changes to take effect.
 
 ## File Communication Protocol
 
-All task files live under `claude_dev/<session_id>/`:
+All task files live under `cc-swarm/<session_id>/`:
 
 | File | Purpose |
 |---|---|
@@ -69,11 +69,6 @@ Main Agent (Architect)          Subagent
 ```bash
 ./uninstall.sh
 ```
-
-## Prerequisites
-
-- [jq](https://jqlang.github.io/jq/) -- JSON processor used by hooks
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) -- v1.0+
 
 ## License
 

@@ -10,7 +10,7 @@ if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
 fi
 
 # Create session communication directory
-session_dir="${CLAUDE_PROJECT_DIR:-$(pwd)}/claude_dev/${session_id}"
+session_dir="${CLAUDE_PROJECT_DIR:-$(pwd)}/cc-swarm/${session_id}"
 mkdir -p "$session_dir"
 
 # Create initial STATUS.md

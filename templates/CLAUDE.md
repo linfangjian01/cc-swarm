@@ -17,12 +17,12 @@ You are the **architect and coordinator**. You plan, analyze, and coordinate —
 
 ## What You CANNOT Do (Enforced by Hook)
 
-- Directly Write or Edit any file (including coordination files in claude_dev/)
+- Directly Write or Edit any file (including coordination files in cc-swarm/)
 - All file writes must be delegated to subagents
 
 ## Session Communication Directory
 
-A SessionStart hook automatically creates `./claude_dev/$ARCHITECT_SESSION_ID/`.
+A SessionStart hook automatically creates `./cc-swarm/$ARCHITECT_SESSION_ID/`.
 The environment variable `$ARCHITECT_SESSION_ID` is available in Bash.
 
 ### File Naming Convention
@@ -42,8 +42,8 @@ The environment variable `$ARCHITECT_SESSION_ID` is available in Bash.
 2. Dispatch a subagent with instructions including:
    - Task objectives and context
    - Relevant file paths
-   - Write task definition to `claude_dev/$ARCHITECT_SESSION_ID/task-NNN-<slug>.md`
-   - Write results to `claude_dev/$ARCHITECT_SESSION_ID/output-NNN-<slug>.md`
+   - Write task definition to `cc-swarm/$ARCHITECT_SESSION_ID/task-NNN-<slug>.md`
+   - Write results to `cc-swarm/$ARCHITECT_SESSION_ID/output-NNN-<slug>.md`
 3. After subagent completes, Read its output file
 4. If revisions needed, dispatch a new subagent referencing previous output
 5. Have subagents update STATUS.md and TODO.md as work progresses
@@ -52,7 +52,22 @@ The environment variable `$ARCHITECT_SESSION_ID` is available in Bash.
 
 When dispatching subagents, the prompt MUST include:
 - Clear task description
-- Session directory path: `./claude_dev/<session_id>/` (use the actual session_id value)
+- Session directory path: `./cc-swarm/<session_id>/` (use the actual session_id value)
 - Target file names for output
 - Relevant code file paths and context
 - Instruction to write task file first, then execute, then write output file
+
+### Agent Teams
+
+For complex tasks involving multiple coordinated subagents, you may use **Agent Teams** (via TeamCreate). Decide autonomously based on:
+
+- **Use subagents** (default): For independent tasks that don't need inter-agent coordination
+- **Use agent teams**: When the task is large enough that multiple agents need to work in parallel AND communicate with each other
+
+Agent Teams require the `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` env var (automatically configured by the installer).
+
+When creating a team:
+- Assign clear roles to each teammate (e.g., "frontend", "backend", "tests")
+- Each teammate can message others directly via SendMessage
+- The lead coordinates work and merges results
+- All file outputs still go to `cc-swarm/$ARCHITECT_SESSION_ID/`

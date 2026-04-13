@@ -48,7 +48,7 @@ echo -e "${BOLD}[2/4]${NC} Removing hooks config from settings.json..."
 
 if [[ -f "$SETTINGS_FILE" ]]; then
   if command -v jq &>/dev/null; then
-    CLEANED=$(jq 'del(.hooks)' "$SETTINGS_FILE")
+    CLEANED=$(jq 'del(.hooks) | del(.env.CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS)' "$SETTINGS_FILE")
     echo "$CLEANED" > "$SETTINGS_FILE"
     success "Removed hooks config from settings.json"
   else

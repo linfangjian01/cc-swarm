@@ -14,5 +14,5 @@ if [ -n "$file_path" ] && [[ "$file_path" == "$HOME/.claude/"* ]]; then
 fi
 
 # Deny main-agent file mutations
-echo "ARCHITECT MODE: Main agent cannot use ${tool_name} directly. Delegate to a subagent via the Agent tool. The subagent will write results to claude_dev/\$ARCHITECT_SESSION_ID/." >&2
+echo "ARCHITECT MODE: Main agent cannot use ${tool_name} directly. Delegate to a subagent via the Agent tool. The subagent will write results to cc-swarm/\$ARCHITECT_SESSION_ID/." >&2
 exit 2

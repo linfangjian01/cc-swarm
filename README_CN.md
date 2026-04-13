@@ -8,13 +8,13 @@
 
 **Claude Code 架构师模式 — 主 agent 规划，子 agent 执行。**
 
-cc-swarm 将 Claude Code 的主 agent 配置为纯粹的**架构师**角色：只负责规划、协调和审查。所有文件编辑、代码开发、文档编写和代码 review 均委派给**子 agent** 完成。通过 [Claude Code Hook](https://docs.anthropic.com/en/docs/claude-code/hooks) 机制在运行时拦截工具调用来强制执行此约束，agent 之间通过共享的**文件系统协议**（`claude_dev/<session_id>/` 下的 markdown 文件）进行通信。
+cc-swarm 将 Claude Code 的主 agent 配置为纯粹的**架构师**角色：只负责规划、协调和审查。所有文件编辑、代码开发、文档编写和代码 review 均委派给**子 agent** 完成。通过 [Claude Code Hook](https://docs.anthropic.com/en/docs/claude-code/hooks) 机制在运行时拦截工具调用来强制执行此约束，agent 之间通过共享的**文件系统协议**（`cc-swarm/<session_id>/` 下的 markdown 文件）进行通信。
 
 ## 工作原理
 
 | 组件 | 作用 |
 |---|---|
-| **SessionStart Hook** | 自动创建 `claude_dev/<session_id>/` 通信目录，并将 `session_id` 持久化为会话环境变量。 |
+| **SessionStart Hook** | 自动创建 `cc-swarm/<session_id>/` 通信目录，并将 `session_id` 持久化为会话环境变量。 |
 | **PreToolUse Hook** | 拦截主 agent 的 `Write` / `Edit` 调用。通过 `agent_id` 区分主 agent 和子 agent — 仅允许子 agent 写入文件。 |
 | **CLAUDE.md** | 全局指令，定义架构师角色、委派工作流和通信协议。 |
 
@@ -31,7 +31,7 @@ cd cc-swarm
 
 ## 文件通信协议
 
-所有任务文件位于 `claude_dev/<session_id>/` 目录下：
+所有任务文件位于 `cc-swarm/<session_id>/` 目录下：
 
 | 文件 | 用途 |
 |---|---|
@@ -69,11 +69,6 @@ cd cc-swarm
 ```bash
 ./uninstall.sh
 ```
-
-## 前置要求
-
-- [jq](https://jqlang.github.io/jq/) -- Hook 使用的 JSON 处理器
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) -- v1.0+
 
 ## 许可证
 

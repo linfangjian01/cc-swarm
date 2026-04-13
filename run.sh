@@ -103,6 +103,9 @@ success "Copied $(basename "$TEMPLATE_FILE") -> ~/.claude/CLAUDE.md"
 step "Merging hooks config into settings.json..."
 
 HOOKS_CONFIG='{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "hooks": {
     "SessionStart": [
       {
@@ -151,11 +154,11 @@ step "Checking .gitignore..."
 
 GITIGNORE_FILE="$(pwd)/.gitignore"
 if [[ -f "$GITIGNORE_FILE" ]]; then
-  if ! grep -qx 'claude_dev/' "$GITIGNORE_FILE" 2>/dev/null; then
-    echo 'claude_dev/' >> "$GITIGNORE_FILE"
-    success "Added 'claude_dev/' to .gitignore"
+  if ! grep -qx 'cc-swarm/' "$GITIGNORE_FILE" 2>/dev/null; then
+    echo 'cc-swarm/' >> "$GITIGNORE_FILE"
+    success "Added 'cc-swarm/' to .gitignore"
   else
-    warn "'claude_dev/' already in .gitignore, skipping"
+    warn "'cc-swarm/' already in .gitignore, skipping"
   fi
 else
   warn "No .gitignore found in current directory, skipping"
@@ -174,6 +177,7 @@ echo "    - $HOOKS_DIR/architect-session-init.sh"
 echo "    - $HOOKS_DIR/enforce-architect.sh"
 echo "    - $CLAUDE_DIR/CLAUDE.md"
 echo "    - $SETTINGS_FILE (hooks config merged)"
+echo "    - Agent Teams env var configured"
 if [[ -f "${SETTINGS_FILE}.bak" ]]; then
 echo "    - ${SETTINGS_FILE}.bak (backup)"
 fi
