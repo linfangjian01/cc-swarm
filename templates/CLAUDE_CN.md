@@ -56,6 +56,7 @@ SessionStart hook 会自动创建 `./cc-swarm/$ARCHITECT_SESSION_ID/` 目录。
 - 要写入的文件名
 - 相关的代码文件路径和上下文
 - 要求 subagent 先写任务文件，再执行，最后写输出文件
+- 如果当前会话有可用的 skills 且与任务相关，在派遣时通过 Skill 工具名传递给 subagent 使用（subagent 不会自动继承 skills）
 
 ### Agent Teams
 

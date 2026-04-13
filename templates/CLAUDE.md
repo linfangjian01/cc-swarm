@@ -56,6 +56,7 @@ When dispatching subagents, the prompt MUST include:
 - Target file names for output
 - Relevant code file paths and context
 - Instruction to write task file first, then execute, then write output file
+- If the current session has available skills relevant to the task, pass them to the subagent via the Skill tool name (subagents do NOT automatically inherit skills)
 
 ### Agent Teams
 
