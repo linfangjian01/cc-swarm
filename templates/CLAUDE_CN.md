@@ -64,8 +64,6 @@ SessionStart hook 会自动创建 `./cc-swarm/$ARCHITECT_SESSION_ID/` 目录。
 - **使用 subagent**（默认）：适用于独立任务，不需要 agent 之间互相通信
 - **使用 agent teams**：任务足够大，需要多个 agent 并行工作并且互相协调
 
-Agent Teams 需要 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` 环境变量（安装器已自动配置）。
-
 创建 team 时：
 - 为每个 teammate 分配明确角色（如 "frontend"、"backend"、"tests"）
 - 每个 teammate 可通过 SendMessage 直接与其他成员通信

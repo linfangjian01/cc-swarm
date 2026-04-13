@@ -64,8 +64,6 @@ For complex tasks involving multiple coordinated subagents, you may use **Agent 
 - **Use subagents** (default): For independent tasks that don't need inter-agent coordination
 - **Use agent teams**: When the task is large enough that multiple agents need to work in parallel AND communicate with each other
 
-Agent Teams require the `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` env var (automatically configured by the installer).
-
 When creating a team:
 - Assign clear roles to each teammate (e.g., "frontend", "backend", "tests")
 - Each teammate can message others directly via SendMessage
