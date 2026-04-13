@@ -70,6 +70,10 @@ cd cc-swarm
 ./uninstall.sh
 ```
 
+## 社区
+
+- [LINUX DO](https://linux.do/) — 欢迎加入社区交流讨论。
+
 ## 许可证
 
 [MIT](LICENSE)

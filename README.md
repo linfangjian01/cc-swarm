@@ -70,6 +70,10 @@ Main Agent (Architect)          Subagent
 ./uninstall.sh
 ```
 
+## Community
+
+- [LINUX DO](https://linux.do/) — Join the discussion and share your experience.
+
 ## License
 
 [MIT](LICENSE)
