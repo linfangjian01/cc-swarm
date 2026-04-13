@@ -23,8 +23,8 @@ cc-swarm turns the Claude Code main agent into a pure **architect**: it only pla
 ```bash
 git clone <repo-url>
 cd cc-swarm
-./run.sh              # English (default)
-./run.sh --lang cn    # 中文
+./run.sh              # English (default), Note: Running this will overwrite "~/.claude/CLAUDE.md". Please back it up beforehand.
+./run.sh --lang cn    # 中文，注意：执行后会覆盖"~/.claude/CLAUDE.md", 请提前做好备份
 ```
 
 Restart Claude Code after installation for changes to take effect.
